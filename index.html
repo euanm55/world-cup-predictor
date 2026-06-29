@@ -79,6 +79,86 @@
     50%      { box-shadow: 0 0 0 12px rgba(245,197,24,0); }
   }
 
+  /* ── FAKE CAPTCHA GATE ───────────────────────────────────────────────────── */
+  #captcha-gate {
+    position: fixed; inset: 0; z-index: 10000;
+    background: rgba(10,61,31,0.97);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    transition: opacity 0.5s ease;
+    font-family: 'Inter', sans-serif;
+  }
+  #captcha-gate.fade-out { opacity: 0; pointer-events: none; }
+  .cap-box {
+    width: 320px; max-width: 94vw;
+    background: #fff; color: #222;
+    border-radius: 6px; overflow: hidden;
+    box-shadow: 0 12px 50px rgba(0,0,0,0.5);
+    animation: cap-in 0.35s ease;
+  }
+  @keyframes cap-in { from { transform: translateY(14px); opacity: 0; } to { transform: none; opacity: 1; } }
+  .cap-header {
+    background: #1a73e8; color: #fff;
+    padding: 14px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .cap-instruction { font-size: 0.82rem; opacity: 0.92; }
+  .cap-target { font-size: 1.5rem; font-weight: 700; line-height: 1.1; }
+  .cap-logo { font-size: 0.62rem; text-align: center; opacity: 0.85; letter-spacing: 0.04em; }
+  .cap-logo .cap-mark { font-size: 1.4rem; }
+  .cap-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 3px; background: #fff; padding: 3px;
+  }
+  .cap-tile {
+    position: relative; aspect-ratio: 1 / 1;
+    background-image: var(--cap-img);
+    background-size: 300% 300%;
+    background-color: #cde3d2;
+    cursor: pointer; overflow: hidden;
+    transition: transform 0.08s;
+  }
+  .cap-tile:active { transform: scale(0.97); }
+  .cap-tile.sel::after {
+    content: '✓';
+    position: absolute; top: 6px; left: 6px;
+    width: 24px; height: 24px;
+    background: #fff; color: #1a73e8;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.95rem; font-weight: 700;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  }
+  .cap-tile.sel { outline: 3px solid #1a73e8; outline-offset: -3px; }
+  .cap-noimg .cap-tile::before {
+    content: '🫥'; position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; opacity: 0.45;
+  }
+  .cap-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px;
+  }
+  .cap-icons { display: flex; gap: 14px; color: #999; font-size: 1.1rem; }
+  .cap-verify {
+    background: #1a73e8; color: #fff;
+    border: none; border-radius: 4px;
+    font-family: 'Inter', sans-serif; font-weight: 600;
+    font-size: 0.92rem; letter-spacing: 0.03em;
+    padding: 9px 26px; cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .cap-verify:hover { background: #1666cc; }
+  .cap-verify:active { transform: scale(0.97); }
+  .cap-error { color: var(--red); font-size: 0.78rem; padding: 0 14px 10px; display: none; }
+  .cap-error.show { display: block; }
+  #captcha-gate.shake .cap-box { animation: cap-shake 0.4s; }
+  @keyframes cap-shake {
+    0%,100% { transform: translateX(0); }
+    20%,60% { transform: translateX(-8px); }
+    40%,80% { transform: translateX(8px); }
+  }
+
   /* ── PAGE TRANSITION LOADER ──────────────────────────────────────────────── */
   #page-loader {
     position: fixed; inset: 0; z-index: 8000;
@@ -318,6 +398,25 @@
 </style>
 </head>
 <body>
+
+<!-- ── FAKE CAPTCHA GATE (shown first, fades to reveal splash) ──────────────── -->
+<div id="captcha-gate">
+  <div class="cap-box">
+    <div class="cap-header">
+      <div class="cap-header-text">
+        <div class="cap-instruction">Select all squares with</div>
+        <div class="cap-target">the Wee Dafty</div>
+      </div>
+      <div class="cap-logo"><div class="cap-mark">🤖</div>NOT A<br>ROBOT</div>
+    </div>
+    <div class="cap-grid" id="cap-grid"><!-- tiles injected by JS --></div>
+    <div class="cap-error" id="cap-error">Naw — pick at least one, ya dafty.</div>
+    <div class="cap-footer">
+      <div class="cap-icons"><span>↻</span><span>🔊</span><span>ⓘ</span></div>
+      <button class="cap-verify" onclick="verifyCaptcha()">VERIFY</button>
+    </div>
+  </div>
+</div>
 
 <!-- ── ENTRY SPLASH ────────────────────────────────────────────────────────── -->
 <div id="splash">
@@ -809,6 +908,51 @@ function calcPoints(pred,actual,perfect){
 }
 
 // ── SPLASH / ENTER ────────────────────────────────────────────────────────────
+// ── FAKE CAPTCHA GATE ─────────────────────────────────────────────────────────
+// 👇 CHANGE THE IMAGE HERE. Easiest option: drop a file named "dafty.jpg" in the
+// repo (same folder as index.html) and you're done. You can also point this at
+// any other filename, a full URL, or a data:image/...;base64,... string.
+const CAPTCHA_IMAGE = 'dafty.jpg';
+
+function buildCaptcha() {
+  const grid = document.getElementById('cap-grid');
+  if (!grid) return;
+  // The single image is split across a 3×3 grid (classic reCAPTCHA look).
+  grid.style.setProperty('--cap-img', `url('${CAPTCHA_IMAGE}')`);
+  grid.innerHTML = '';
+  // Friendly hint if the image hasn't been added yet — still fully playable.
+  const probe = new Image();
+  probe.onerror = () => grid.classList.add('cap-noimg');
+  probe.src = CAPTCHA_IMAGE;
+  for (let r = 0; r < 3; r++) {
+    for (let c = 0; c < 3; c++) {
+      const tile = document.createElement('div');
+      tile.className = 'cap-tile';
+      tile.style.backgroundPosition = `${c * 50}% ${r * 50}%`;
+      tile.addEventListener('click', () => {
+        tile.classList.toggle('sel');
+        document.getElementById('cap-error').classList.remove('show');
+      });
+      grid.appendChild(tile);
+    }
+  }
+}
+
+function verifyCaptcha() {
+  const gate = document.getElementById('captcha-gate');
+  const anySelected = gate.querySelectorAll('.cap-tile.sel').length > 0;
+  if (!anySelected) {
+    // It's fake — but make them click something so it feels real.
+    document.getElementById('cap-error').classList.add('show');
+    gate.classList.remove('shake'); void gate.offsetWidth; gate.classList.add('shake');
+    return;
+  }
+  gate.classList.add('fade-out');
+  setTimeout(() => { gate.style.display = 'none'; }, 500);
+}
+
+buildCaptcha();
+
 function enterApp() {
   const sp = document.getElementById('splash');
   sp.classList.add('fade-out');
