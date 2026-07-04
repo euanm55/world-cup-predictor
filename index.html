@@ -552,6 +552,9 @@ const ALL_PREDICTIONS = {
     'Ivory Coast v Norway':[1,2],'France v Sweden':[2,0],'Mexico v Ecuador':[1,1],'England v DR Congo':[3,0],
     'Belgium v Senegal':[2,1],'USA v Bosnia':[2,0],'Spain v Austria':[2,1],'Portugal v Croatia':[1,1],
     'Switzerland v Algeria':[2,0],'Australia v Egypt':[1,0],'Argentina v Cape Verde':[3,0],'Colombia v Ghana':[2,1],
+    // — Round of 16 (1/8-Finals) —
+    'Canada v Morocco':[0,1],'Paraguay v France':[0,2],'Brazil v Norway':[2,1],'Mexico v England':[1,1],
+    'Portugal v Spain':[0,1],'USA v Belgium':[1,2],'Argentina v Egypt':[2,1],'Switzerland v Colombia':[0,1],
   },
   Ander: {
     'Mexico v S. Africa':[2,0],'S. Korea v Czechia':[2,1],'Czechia v S. Africa':[1,2],
@@ -583,6 +586,9 @@ const ALL_PREDICTIONS = {
     'Ivory Coast v Norway':[1,1],'France v Sweden':[3,0],'Mexico v Ecuador':[1,1],'England v DR Congo':[3,0],
     'Belgium v Senegal':[2,1],'USA v Bosnia':[2,1],'Spain v Austria':[2,0],'Portugal v Croatia':[1,1],
     'Switzerland v Algeria':[2,0],'Australia v Egypt':[0,1],'Argentina v Cape Verde':[4,0],'Colombia v Ghana':[2,1],
+    // — Round of 16 (1/8-Finals) —
+    'Canada v Morocco':[1,2],'Paraguay v France':[0,3],'Brazil v Norway':[3,1],'Mexico v England':[1,2],
+    'Portugal v Spain':[1,2],'USA v Belgium':[1,1],'Argentina v Egypt':[2,1],'Switzerland v Colombia':[1,2],
   },
   Blair: {
     'Mexico v S. Africa':[2,0],'S. Korea v Czechia':[1,1],'Czechia v S. Africa':[1,0],
@@ -614,6 +620,9 @@ const ALL_PREDICTIONS = {
     'Ivory Coast v Norway':[0,1],'France v Sweden':[4,2],'Mexico v Ecuador':[2,1],'England v DR Congo':[2,0],
     'Belgium v Senegal':[2,2],'USA v Bosnia':[1,0],'Spain v Austria':[3,1],'Portugal v Croatia':[1,1],
     'Switzerland v Algeria':[2,0],'Australia v Egypt':[1,2],'Argentina v Cape Verde':[4,0],'Colombia v Ghana':[1,0],
+    // — Round of 16 (1/8-Finals) —
+    'Canada v Morocco':[1,2],'Paraguay v France':[0,3],'Brazil v Norway':[2,2],'Mexico v England':[2,1],
+    'Portugal v Spain':[1,2],'USA v Belgium':[1,1],'Argentina v Egypt':[2,1],'Switzerland v Colombia':[1,2],
   },
   Ishu: {
     'Mexico v S. Africa':[2,0],'S. Korea v Czechia':[1,1],'Czechia v S. Africa':[0,0],
@@ -645,6 +654,9 @@ const ALL_PREDICTIONS = {
     'Ivory Coast v Norway':[2,3],'France v Sweden':[3,0],'Mexico v Ecuador':[2,1],'England v DR Congo':[3,1],
     'Belgium v Senegal':[1,1],'USA v Bosnia':[2,1],'Spain v Austria':[2,0],'Portugal v Croatia':[3,2],
     'Switzerland v Algeria':[2,1],'Australia v Egypt':[1,1],'Argentina v Cape Verde':[3,0],'Colombia v Ghana':[2,1],
+    // — Round of 16 (1/8-Finals) —
+    'Canada v Morocco':[0,2],'Paraguay v France':[1,3],'Brazil v Norway':[2,2],'Mexico v England':[2,1],
+    'Portugal v Spain':[1,3],'USA v Belgium':[0,1],'Argentina v Egypt':[1,1],'Switzerland v Colombia':[1,3],
   },
   Stu: {
     'Mexico v S. Africa':[2,0],'S. Korea v Czechia':[1,1],'Czechia v S. Africa':[2,1],
@@ -676,6 +688,9 @@ const ALL_PREDICTIONS = {
     'Ivory Coast v Norway':[0,1],'France v Sweden':[4,2],'Mexico v Ecuador':[2,1],'England v DR Congo':[2,0],
     'Belgium v Senegal':[2,2],'USA v Bosnia':[1,0],'Spain v Austria':[3,1],'Portugal v Croatia':[1,1],
     'Switzerland v Algeria':[2,0],'Australia v Egypt':[1,2],'Argentina v Cape Verde':[4,0],'Colombia v Ghana':[1,0],
+    // — Round of 16 (1/8-Finals) —
+    'Canada v Morocco':[0,1],'Paraguay v France':[1,3],'Brazil v Norway':[2,1],'Mexico v England':[2,1],
+    'Portugal v Spain':[2,3],'USA v Belgium':[1,1],'Argentina v Egypt':[2,0],'Switzerland v Colombia':[1,2],
   },
   Roy: {
     'Mexico v S. Africa':[2,0],'S. Korea v Czechia':[1,2],'Czechia v S. Africa':[1,1],
@@ -707,6 +722,9 @@ const ALL_PREDICTIONS = {
     'Ivory Coast v Norway':[1,1],'France v Sweden':[3,0],'Mexico v Ecuador':[2,1],'England v DR Congo':[3,0],
     'Belgium v Senegal':[2,1],'USA v Bosnia':[2,1],'Spain v Austria':[2,0],'Portugal v Croatia':[2,1],
     'Switzerland v Algeria':[1,1],'Australia v Egypt':[1,1],'Argentina v Cape Verde':[3,0],'Colombia v Ghana':[2,1],
+    // — Round of 16 (1/8-Finals) —
+    'Canada v Morocco':[2,2],'Paraguay v France':[0,3],'Brazil v Norway':[2,2],'Mexico v England':[3,1],
+    'Portugal v Spain':[1,3],'USA v Belgium':[2,1],'Argentina v Egypt':[1,1],'Switzerland v Colombia':[1,1],
   },
 };
 
@@ -812,31 +830,41 @@ const GROUPS = [
 
 // ── KNOCKOUT FIXTURES ──────────────────────────────────────────────────────────
 // Each match here is worth 6 pts for a perfect score (stage:'ko'). The team
-// names below are PLACEHOLDERS — swap in the real Round-of-32 ties (and dates if
+// names below are PLACEHOLDERS — swap in the real ties (and dates if
 // you have them) and the cards, dates and scoring all wire up automatically.
 // Keep the same shape as the group matches: key must equal "Home v Away" using
 // the app's short names (e.g. "S. Korea", "Ivory Coast", "DR Congo").
-// An optional `date:'YYYY-MM-DD'` is used for the by-date view until the live
-// feed supplies one. Predictions are added to each player's block by match key,
-// exactly like the group stage.
+// An optional `date:'YYYY-MM-DD'` (and `time:'HH:MM'`, local kickoff time) is
+// used for the by-date view until the live feed supplies one. Predictions are
+// added to each player's block by match key, exactly like the group stage.
 const KNOCKOUT = [
-  { id:'R32', label:'Round of 32', matches:[
-    { key:'S. Africa v Canada',        home:'S. Africa',   away:'Canada',        fix:'Tie 1',   stage:'ko', date:'2026-06-28' },
-    { key:'Germany v Paraguay',        home:'Germany',     away:'Paraguay',      fix:'Tie 2',   stage:'ko', date:'2026-06-29' },
-    { key:'Netherlands v Morocco',     home:'Netherlands', away:'Morocco',       fix:'Tie 3',   stage:'ko', date:'2026-06-29' },
-    { key:'Brazil v Japan',            home:'Brazil',      away:'Japan',         fix:'Tie 4',   stage:'ko', date:'2026-06-29' },
-    { key:'France v Sweden',           home:'France',      away:'Sweden',        fix:'Tie 5',   stage:'ko', date:'2026-06-30' },
-    { key:'Ivory Coast v Norway',      home:'Ivory Coast', away:'Norway',        fix:'Tie 6',   stage:'ko', date:'2026-06-30' },
-    { key:'Mexico v Ecuador',          home:'Mexico',      away:'Ecuador',       fix:'Tie 7',   stage:'ko', date:'2026-06-30' },
-    { key:'England v DR Congo',        home:'England',     away:'DR Congo',      fix:'Tie 8',   stage:'ko', date:'2026-07-01' },
-    { key:'USA v Bosnia',              home:'USA',         away:'Bosnia',        fix:'Tie 9',   stage:'ko', date:'2026-07-01' },
-    { key:'Belgium v Senegal',         home:'Belgium',     away:'Senegal',       fix:'Tie 10',  stage:'ko', date:'2026-07-01' },
-    { key:'Portugal v Croatia',        home:'Portugal',    away:'Croatia',       fix:'Tie 11',  stage:'ko', date:'2026-07-02' },
-    { key:'Spain v Austria',           home:'Spain',       away:'Austria',       fix:'Tie 12',  stage:'ko', date:'2026-07-02' },
-    { key:'Switzerland v Algeria',     home:'Switzerland', away:'Algeria',       fix:'Tie 13',  stage:'ko', date:'2026-07-02' },
-    { key:'Argentina v Cape Verde',    home:'Argentina',   away:'Cape Verde',    fix:'Tie 14',  stage:'ko', date:'2026-07-03' },
-    { key:'Colombia v Ghana',          home:'Colombia',    away:'Ghana',         fix:'Tie 15',  stage:'ko', date:'2026-07-03' },
-    { key:'Australia v Egypt',         home:'Australia',   away:'Egypt',         fix:'Tie 16',  stage:'ko', date:'2026-07-03' },
+  { id:'R32', label:'1/16-Finals', matches:[
+    { key:'S. Africa v Canada',        home:'S. Africa',   away:'Canada',        fix:'Tie 1',   stage:'ko', date:'2026-06-28', time:'12:00' },
+    { key:'Brazil v Japan',            home:'Brazil',      away:'Japan',         fix:'Tie 2',   stage:'ko', date:'2026-06-29', time:'12:00' },
+    { key:'Germany v Paraguay',        home:'Germany',     away:'Paraguay',      fix:'Tie 3',   stage:'ko', date:'2026-06-29', time:'16:30' },
+    { key:'Netherlands v Morocco',     home:'Netherlands', away:'Morocco',       fix:'Tie 4',   stage:'ko', date:'2026-06-29', time:'19:00' },
+    { key:'Ivory Coast v Norway',      home:'Ivory Coast', away:'Norway',        fix:'Tie 5',   stage:'ko', date:'2026-06-30', time:'12:00' },
+    { key:'France v Sweden',           home:'France',      away:'Sweden',        fix:'Tie 6',   stage:'ko', date:'2026-06-30', time:'17:00' },
+    { key:'Mexico v Ecuador',          home:'Mexico',      away:'Ecuador',       fix:'Tie 7',   stage:'ko', date:'2026-06-30', time:'19:00' },
+    { key:'England v DR Congo',        home:'England',     away:'DR Congo',      fix:'Tie 8',   stage:'ko', date:'2026-07-01', time:'12:00' },
+    { key:'Belgium v Senegal',         home:'Belgium',     away:'Senegal',       fix:'Tie 9',   stage:'ko', date:'2026-07-01', time:'13:00' },
+    { key:'USA v Bosnia',              home:'USA',         away:'Bosnia',        fix:'Tie 10',  stage:'ko', date:'2026-07-01', time:'17:00' },
+    { key:'Spain v Austria',           home:'Spain',       away:'Austria',       fix:'Tie 11',  stage:'ko', date:'2026-07-02', time:'12:00' },
+    { key:'Portugal v Croatia',        home:'Portugal',    away:'Croatia',       fix:'Tie 12',  stage:'ko', date:'2026-07-02', time:'19:00' },
+    { key:'Switzerland v Algeria',     home:'Switzerland', away:'Algeria',       fix:'Tie 13',  stage:'ko', date:'2026-07-02', time:'20:00' },
+    { key:'Australia v Egypt',         home:'Australia',   away:'Egypt',         fix:'Tie 14',  stage:'ko', date:'2026-07-03', time:'13:00' },
+    { key:'Argentina v Cape Verde',    home:'Argentina',   away:'Cape Verde',    fix:'Tie 15',  stage:'ko', date:'2026-07-03', time:'18:00' },
+    { key:'Colombia v Ghana',          home:'Colombia',    away:'Ghana',         fix:'Tie 16',  stage:'ko', date:'2026-07-03', time:'20:30' },
+  ]},
+  { id:'R16', label:'1/8-Finals', matches:[
+    { key:'Canada v Morocco',          home:'Canada',      away:'Morocco',       fix:'Tie 1',   stage:'ko', date:'2026-07-04', time:'12:00' },
+    { key:'Paraguay v France',         home:'Paraguay',    away:'France',        fix:'Tie 2',   stage:'ko', date:'2026-07-04', time:'17:00' },
+    { key:'Brazil v Norway',           home:'Brazil',      away:'Norway',        fix:'Tie 3',   stage:'ko', date:'2026-07-05', time:'16:00' },
+    { key:'Mexico v England',          home:'Mexico',      away:'England',       fix:'Tie 4',   stage:'ko', date:'2026-07-05', time:'18:00' },
+    { key:'Portugal v Spain',          home:'Portugal',    away:'Spain',         fix:'Tie 5',   stage:'ko', date:'2026-07-06', time:'14:00' },
+    { key:'USA v Belgium',             home:'USA',         away:'Belgium',       fix:'Tie 6',   stage:'ko', date:'2026-07-06', time:'17:00' },
+    { key:'Argentina v Egypt',         home:'Argentina',   away:'Egypt',         fix:'Tie 7',   stage:'ko', date:'2026-07-07', time:'12:00' },
+    { key:'Switzerland v Colombia',    home:'Switzerland', away:'Colombia',      fix:'Tie 8',   stage:'ko', date:'2026-07-07', time:'13:00' },
   ]},
 ];
 
@@ -852,6 +880,7 @@ function allMatches(){
 function matchPerfect(m){ return 5; } // flat 5 for every match (group + knockout)
 function actualFor(m){ const ls=liveScores[m.key]; return ls&&ls.status==='ft'?[ls.homeScore,ls.awayScore]:null; }
 function dateFor(m){ const ls=liveScores[m.key]; return (ls&&ls.date)||m.date||''; }
+function timeFor(m){ const ls=liveScores[m.key]; return (ls&&ls.time)||m.time||''; }
 
 // Aggregate a single player's standing across group + knockout matches.
 // maxPossible and the efficiency denominator only count matches the player has
@@ -1015,12 +1044,15 @@ function renderLeagueTable(){
   const players=['FF Champ','Ander','Blair','Ishu','Stu','Roy'];
   const rows=players.map(name=>{ const {total,played,totalM}=calcPlayerTotal(name); return {name,total,played,totalM}; });
   rows.sort((a,b)=>b.total-a.total);
-  const maxPts=rows.reduce((mx,r)=>Math.max(mx,r.total),0)||1;
+  const maxPts=rows.reduce((mx,r)=>Math.max(mx,r.total),-Infinity);
+  const minPts=rows.reduce((mn,r)=>Math.min(mn,r.total),Infinity);
+  const ptsRange=maxPts-minPts;
   const tbody=document.getElementById('league-tbody');
   tbody.innerHTML='';
   rows.forEach((row,idx)=>{
     const rankClass=idx===0?'r1':idx===1?'r2':idx===2?'r3':'';
-    const barPct=Math.round((row.total/maxPts)*100);
+    // Gauge runs last-place (0%) to first-place (100%), not each player's own share of the max.
+    const barPct=ptsRange>0?Math.round(((row.total-minPts)/ptsRange)*100):100;
     const tr=document.createElement('tr');
     tr.className='player-row';
     tr.onclick=()=>showPlayerPage(row.name);
@@ -1092,11 +1124,12 @@ function renderSection(wrap,preds,label,fullMatches){
 }
 
 function renderByDate(wrap,preds){
-  const items=allMatches().map(m=>({match:m, date:dateFor(m)}));
+  const items=allMatches().map(m=>({match:m, date:dateFor(m), time:timeFor(m)}));
   items.sort((a,b)=>{
     if(!a.date&&!b.date) return 0;
     if(!a.date) return 1; if(!b.date) return -1;
-    return a.date.localeCompare(b.date);
+    if(a.date!==b.date) return a.date.localeCompare(b.date);
+    return a.time.localeCompare(b.time);
   });
   const byDate={};
   items.forEach(item=>{
