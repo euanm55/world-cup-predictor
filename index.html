@@ -559,6 +559,8 @@ const ALL_PREDICTIONS = {
     'France v Morocco':[1,0],'Spain v Belgium':[1,0],'Norway v England':[1,2],'Argentina v Switzerland':[1,0],
     // — Semi-final —
     'France v Spain':[2,1],'England v Argentina':[2,1],
+    // — Final —
+    'Spain v Argentina':[1,1],
   },
   Ander: {
     'Mexico v S. Africa':[2,0],'S. Korea v Czechia':[2,1],'Czechia v S. Africa':[1,2],
@@ -597,6 +599,8 @@ const ALL_PREDICTIONS = {
     'France v Morocco':[2,1],'Spain v Belgium':[2,0],'Norway v England':[1,2],'Argentina v Switzerland':[2,1],
     // — Semi-final —
     'France v Spain':[2,0],'England v Argentina':[1,2],
+    // — Final —
+    'Spain v Argentina':[2,1],
   },
   Blair: {
     'Mexico v S. Africa':[2,0],'S. Korea v Czechia':[1,1],'Czechia v S. Africa':[1,0],
@@ -635,6 +639,8 @@ const ALL_PREDICTIONS = {
     'France v Morocco':[3,1],'Spain v Belgium':[2,1],'Norway v England':[1,1],'Argentina v Switzerland':[2,0],
     // — Semi-final —
     'France v Spain':[2,1],'England v Argentina':[2,1],
+    // — Final —
+    'Spain v Argentina':[2,2],
   },
   Ishu: {
     'Mexico v S. Africa':[2,0],'S. Korea v Czechia':[1,1],'Czechia v S. Africa':[0,0],
@@ -711,6 +717,8 @@ const ALL_PREDICTIONS = {
     'France v Morocco':[1,1],'Spain v Belgium':[1,1],'Norway v England':[1,1],'Argentina v Switzerland':[1,1],
     // — Semi-final —
     'France v Spain':[1,1],'England v Argentina':[1,2],
+    // — Final —
+    'Spain v Argentina':[1,0],
   },
   Roy: {
     'Mexico v S. Africa':[2,0],'S. Korea v Czechia':[1,2],'Czechia v S. Africa':[1,1],
@@ -899,6 +907,9 @@ const KNOCKOUT = [
   { id:'SF', label:'Semi-final', matches:[
     { key:'France v Spain',            home:'France',      away:'Spain',         fix:'Tie 1',   stage:'ko', date:'2026-07-14', time:'14:00' },
     { key:'England v Argentina',       home:'England',     away:'Argentina',     fix:'Tie 2',   stage:'ko', date:'2026-07-15', time:'15:00' },
+  ]},
+  { id:'F', label:'Final', matches:[
+    { key:'Spain v Argentina',         home:'Spain',        away:'Argentina',    fix:'Final',   stage:'ko', date:'2026-07-19', time:'15:00' },
   ]},
 ];
 
