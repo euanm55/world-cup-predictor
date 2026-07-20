@@ -873,6 +873,9 @@ const GROUPS = [
 // An optional `date:'YYYY-MM-DD'` (and `time:'HH:MM'`, local kickoff time) is
 // used for the by-date view until the live feed supplies one. Predictions are
 // added to each player's block by match key, exactly like the group stage.
+// An optional `actual:[home,away]` hardcodes the final score for scoring and
+// the cards when the live feed hasn't picked the result up yet — the live
+// feed still takes priority once it reports the match as full-time.
 const KNOCKOUT = [
   { id:'R32', label:'1/16-Finals', matches:[
     { key:'S. Africa v Canada',        home:'S. Africa',   away:'Canada',        fix:'Tie 1',   stage:'ko', date:'2026-06-28', time:'12:00' },
@@ -913,7 +916,7 @@ const KNOCKOUT = [
     { key:'England v Argentina',       home:'England',     away:'Argentina',     fix:'Tie 2',   stage:'ko', date:'2026-07-15', time:'15:00' },
   ]},
   { id:'F', label:'Final', matches:[
-    { key:'Spain v Argentina',         home:'Spain',        away:'Argentina',    fix:'Final',   stage:'ko', date:'2026-07-19', time:'15:00' },
+    { key:'Spain v Argentina',         home:'Spain',        away:'Argentina',    fix:'Final',   stage:'ko', date:'2026-07-19', time:'15:00', actual:[0,0] },
   ]},
 ];
 
@@ -927,7 +930,8 @@ function allMatches(){
   return arr;
 }
 function matchPerfect(m){ return 5; } // flat 5 for every match (group + knockout)
-function actualFor(m){ const ls=liveScores[m.key]; return ls&&ls.status==='ft'?[ls.homeScore,ls.awayScore]:null; }
+function actualFor(m){ const ls=liveScores[m.key]; if(ls&&ls.status==='ft') return [ls.homeScore,ls.awayScore]; return m.actual||null; }
+function isFTFor(m){ const ls=liveScores[m.key]; return (ls&&ls.status==='ft')||!!m.actual; }
 function dateFor(m){ const ls=liveScores[m.key]; return (ls&&ls.date)||m.date||''; }
 function timeFor(m){ const ls=liveScores[m.key]; return (ls&&ls.time)||m.time||''; }
 
@@ -1233,10 +1237,10 @@ function formatDate(d){
 // ── BUILD CARD ────────────────────────────────────────────────────────────────
 function buildCard(match,preds){
   const pred=preds[match.key], ls=liveScores[match.key];
-  const actual=ls&&ls.status==='ft'?[ls.homeScore,ls.awayScore]:null;
+  const actual=actualFor(match);
   const perfect=5;
   const pts=calcPoints(pred,actual,perfect);
-  const isLive=ls&&ls.status==='live', isFT=ls&&ls.status==='ft';
+  const isFT=isFTFor(match), isLive=!isFT&&ls&&ls.status==='live';
   const cardDate=(ls&&ls.date)||match.date||'';
 
   const LABELS={5:'Perfect Score',4:'Result + Score',3:'Correct Result',1:'One Score Correct',0:'No Points'};
